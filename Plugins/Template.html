@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Report</title>
+    <link rel="stylesheet" href="D:\Sample_Code\Plugins\customStyle.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        list-style: none;
+
+        /* display: inline; */
+    }
+
+    #overrallBody {
+        background: #000;
+    }
+   
+
+    #header {
+        background-color: #bc4639;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 28%;
+        position: relative;
+    }
+
+    body {
+        box-sizing: border-box;
+        display: inline;
+    }
+
+    #container {}
+
+    #side-nav {
+
+        background-color: #d4ada3;
+        width: 20%;
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    #content {
+        float: right;
+        background-color: #f7e8e5;
+        width: 80%;
+        height: 100vh;
+        position: relative;
+        overflow: auto;
+    }
+
+    .side-nav-ul {
+        float: left;
+        margin-left: 5px;
+        text-decoration: none;
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .side-nav-ul li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 72px;
+    }
+
+
+    #clientLogo {
+        height: 33px;
+        width: 110.5px;
+        margin: 13px;
+
+    }
+
+    h1 {
+        color: snow;
+        font-size: x-large;
+    }
+
+    #reportGeneratedTime {
+        color: #edf2f4;
+    }
+
+    .section {
+        display: none;
+        /* Hide sections by default */
+    }
+
+    .section.active {
+        display: block;
+        /* Display active section */
+    }
+
+
+    .table-container {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Additional styles for alternating table placement */
+    .table-container.left {
+        order: 1;
+    }
+
+    .table-container.right {
+        order: 2;
+    }
+
+    h2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: nowrap;
+        margin-top: 10px;
+    }
+
+    .table-container table th,
+    .table-container table td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+
+
+
+    caption {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+
+    table {
+        border-collapse: collapse;
+        /* border: 1px solid black; */
+        margin: 10px;
+        display: inline-block;
+        font-size: 0.9em;
+        min-width: 400px;
+    }
+
+    a {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* .tc {
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 47px;
+    }
+
+    .ts {
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 47px;
+    }
+
+    .tStep {
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 47px;
+    } */
+
+    a:hover {
+        background: #d4ada3;
+        color: snow;
+        transition: 0.08s ease-in;
+    }
+
+
+    /* Style for test case name */
+    .testCaseName {
+        margin-left: 30px;
+        /* Add margin to the left for indentation */
+        list-style: none;
+        /* Remove default list styles */
+    }
+
+    .testCaseName li {
+        display: block;
+        /* Display list items as block */
+        margin-bottom: 10px;
+        /* Add bottom margin between test cases */
+    }
+
+    .testScenarioName {
+        margin-left: 58px;
+        /* Add margin to the left for indentation */
+        list-style: none;
+        /* Remove default list styles */
+    }
+
+    .testScenarioName li {
+        display: block;
+        /* Display list items as block */
+        margin-bottom: 10px;
+        /* Add bottom margin between test scenarios */
+    }
+
+    .testSteps {
+        margin-left: 90px;
+        /* Add margin to the left for indentation */
+        list-style: none;
+        /* Remove default list styles */
+    }
+
+    .testSteps li {
+        display: block;
+        /* Display list items as block */
+        margin-bottom: 33px;
+        line-height: 0px;
+        /* Add bottom margin between test steps */
+    }
+</style>
+
+
+
+
+<body>
+    <div id="overrallBody">
+
+
+        <div id="header">
+            <img id="clientLogo" src="D:\Sample_Code\Plugins\ClientLogo.png" alt="Sharajman Technologies">
+            <h1>AUTOMATION REPORT</h1>
+            <span id="reportGeneratedTime">
+                <%= endDateAndTime %>
+            </span>
+        </div>
+
+        <div class="container">
+
+            <nav id="side-nav">
+                <ul class="side-nav-ul">
+                    <li class="dashboardClass">
+                        <span class="material-symbols-outlined">house</span>
+                        <a href="#" onclick="showSection('dashboard')">DashBoard</a>
+                    </li>
+                    <li class="testSummaryClass">
+                        <span class="material-symbols-outlined">pie_chart</span> <a href="#"
+                            onclick="showSection('testSummary')">Test Summary Report</a>
+                    </li>
+                    <li class="detailedTestSummaryClass">
+                        <span class="material-symbols-outlined">overview</span> <a href="#"
+                            onclick="showSection('detailedTestSummary')">Detailed Test Summary</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+
+
+            <div id="content">
+
+                <div id="dashboard" class="section active">
+                    <h2 class="head">Dashboard</h2>
+                    <div class="table-container right">
+                        <table id="testSummaryTable">
+                            <caption>
+                                Test Summary Report
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>Environment Name</th>
+                                    <th>Start Date & Time</th>
+                                    <th>End Date & Time</th>
+                                    <th>Test Type</th>
+                                    <th>Test Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <!-- <td>Environment Name</td> -->
+                                    <td> <a href="<%= url %>">
+                                            <%= url %>
+                                        </a></td>
+                                    <td>
+                                        <%= startDateAndTime %>
+                                    </td>
+                                    <td>
+                                        <%= endDateAndTime %>
+                                    </td>
+                                    <td>
+                                        <%= testType %>
+                                    </td>
+                                    <td>
+                                        <%= totalTimeInMinutes%> Minutes
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-container left">
+                        <table id="automationMetricsTable">
+                            <caption>
+                                Automation Metrics
+                            </caption>
+                            <tbody>
+                                <tr>
+                                    <td>Total Testcases</td>
+                                    <td>
+                                        <%= testCaseCount %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: <%= passCount > 0 ? 'green' : 'inherit' %>">Pass</td>
+                                    <td class="<%= passCount > 0 ? 'passed' : '' %>">
+                                        <%= passCount %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: <%= failCount > 0 ? 'red' : 'inherit' %>">Fail</td>
+                                    <td class="<%= failCount > 0 ? 'failed' : '' %>">
+                                        <%= failCount %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: <%= skipCount >= 0 ? 'orange' : 'inherit' %>">Skipped</td>
+                                    <td class="<%= skipCount > 0 ? 'skipped' : '' %>">
+                                        <%= skipCount %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <canvas id="pieChart" width="100px" height="100px"></canvas> -->
+
+                    </div>
+                    <div class="table-container right">
+                        <table id="automationExecutionSummaryTable">
+                            <caption>
+                                Automation Execution Summary
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>Browser</th>
+                                    <th>Passed</th>
+                                    <th>Failed</th>
+                                    <th>Skipped</th>
+                                    <th>Pass %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <%= browserName %>
+                                    </td>
+                                    <td>
+                                        <%= passCount %>
+                                    </td>
+                                    <td>
+                                        <%= failCount %>
+                                    </td>
+                                    <td>
+                                        <%= skipCount %>
+                                    </td>
+                                    <td>
+                                        <%const passPercentage=(passCount / testCaseCount) * 100; %>
+                                            <%= passPercentage.toFixed(2) %>%
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="testSummary" class="section">
+                    <h2 class="head">Test Summary Report</h2>
+                    <div class="testSummaryTables">
+                        <div class="table-container right">
+                            <!-- Table 2: Failed Tests Information -->
+                            <table id="failedTestsInfoTable">
+                                <caption>
+                                    Failed Tests Information
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>Testcase Name</th>
+                                        <th>Status</th>
+                                        <th>Browser Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%testCases.forEach(testCase=> {
+                                        let passed = true;
+                                        let failed = false;
+                                        let skipped = false;
+
+                                        testCase.scenarios.forEach(scenario => {
+                                        scenario.steps.forEach(step => {
+                                        if (step.stepStatus === 'failed') {
+                                        passed = false;
+                                        failed = true;
+                                        } else if (step.stepStatus === 'skipped') {
+                                        passed = false;
+                                        skipped = true;
+                                        }
+                                        });
+                                        });
+
+                                        if (failed) { %>
+                                        <tr>
+                                            <td>
+                                                <%= testCase.name %>
+                                            </td>
+                                            <td>Failed</td>
+                                            <td>
+                                                <%= browserName %>
+                                            </td>
+                                        </tr>
+                                        <%} }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="testSummaryTables">
+                        <div class="table-container left">
+                            <!-- Table 3: Skipped Test Information -->
+                            <% if (skipCount> 0) { %>
+                                <table id="skippedTestInformationTable">
+                                    <caption>
+                                        Skipped Test Information
+                                    </caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Testcase Name</th>
+                                            <th>Browser Version</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% testCases.forEach(testCase=> {
+                                            let passed = true;
+                                            let failed = false;
+                                            let skipped = false;
+
+                                            testCase.scenarios.forEach(scenario => {
+                                            scenario.steps.forEach(step => {
+                                            if (step.stepStatus === 'failed') {
+                                            passed = false;
+                                            failed = true;
+                                            } else if (step.stepStatus === 'skipped') {
+                                            passed = false;
+                                            skipped = true;
+                                            }
+                                            });
+                                            });
+                                            if (skipped) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= testCase.name %>
+                                                </td>
+                                                <td>Skipped</td>
+                                            </tr>
+                                            <% } }); %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                        </div>
+
+                        <div class="table-container right">
+                            <!-- Table 4: Failed Tests Summary -->
+                            <table id="failedTestsSummaryTable">
+                                <caption>
+                                    Failed Tests Summary
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>Testcase Name</th>
+                                        <th>Scenario Name</th>
+                                        <th>Failed Step</th>
+                                        <th>Error Messages</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% testCases.forEach(testCase=> { %>
+                                        <% testCase.scenarios.forEach(scenario=> { %>
+                                            <% scenario.steps.forEach(step=> { %>
+                                                <% if (step.errorMessage) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= testCase.name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= scenario.name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= step.name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= step.errorMessage %>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% }); %>
+                                                            <% }); %>
+                                                                <% }); %>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="detailedTestSummary" class="section">
+                    <h2 class="head">Detailed Test Summary</h2>
+                    <div class="testSummaryTables">
+                        <div class="table-container right">
+                            <table>
+                                <caption>
+                                    Detailed Test Summary
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>Testcase Name</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%testCases.forEach(testCase=> {
+                                        let passed = true;
+                                        let failed = false;
+                                        let skipped = false;
+
+                                        testCase.scenarios.forEach(scenario => {
+                                        scenario.steps.forEach(step => {
+                                        if (step.stepStatus === 'failed') {
+                                        passed = false;
+                                        failed = true;
+                                        } else if (step.stepStatus === 'skipped') {
+                                        passed = false;
+                                        skipped = true;
+                                        }
+                                        });
+                                        });
+
+                                        if (failed) { %>
+                                        <tr>
+                                            <td>
+                                                <%= testCase.name %>
+                                            </td>
+                                            <td style="color: red;">Failed</td>
+                                        </tr>
+                                        <%} else if (passed) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= testCase.name %>
+                                                </td>
+                                                <td style="color: green;">Passed</td>
+                                            </tr>
+                                            <%} else if (skipped) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= testCase.name %>
+                                                    </td>
+                                                    <td style="color: orange;">Skipped</td>
+                                                </tr>
+                                                <%} }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% function getScenarioColor(scenario) { if (scenario.steps.some(step=> step.stepStatus
+                        ==="failed")) {
+                        return "red" ;
+                        }
+                        else if (scenario.steps.every(step=> step.stepStatus === "passed")) {
+                        return "green" ;
+                        }
+                        else {
+                        return "orange" ;
+                        }
+                        } %>
+                        <% function getStepColor(status) { if (status==="passed" ) { return "green" ; } else if
+                            (status==="failed" ) { return "red" ; } else { return "orange" ; } } %>
+                            <ul class="testCaseName">
+                                <h2 style="display: inline-block;">Testcases</h2>
+                                <% testCases.forEach(testCase=>
+                                    { %>
+                                    <li>
+                                        <span  class="material-symbols-outlined">
+                                            expand_more
+                                        </span>
+                                        <a  onclick="toggleScenarios(this)" class="tc" >
+                                            <%= testCase.name %>
+                                        </a>
+                                        <ul class="testScenarioName" style="display: none;">
+
+                                            <% testCase.scenarios.forEach(scenario=>
+                                                { %>
+                                                <li >
+                                                    <span  class="material-symbols-outlined">
+                                                        expand_circle_right
+                                                    </span>
+                                                    <h3 style="display: inline-block;margin-top: 25px;">
+                                                        Scenarios</h3>
+                                                    <a onclick="toggleSteps(this)" class="ts" 
+                                                        style="color: <%= getScenarioColor(scenario) %>">
+                                                        <%= scenario.name %>
+                                                    </a>
+                                                    <ul class="testSteps" style="display: none;">
+                                                        <h4 style="display: inline-block; margin-top: 17px;" >
+                                                            Steps</h4>
+                                                        <% scenario.steps.forEach(step=>
+                                                            {
+                                                            %>
+                                                            <li>
+                                                                <a class="tStep"
+                                                                    style="color: <%= getStepColor(step.stepStatus) %>">
+                                                                    <%= step.name %>
+                                                                </a>
+                                                            </li>
+                                                            <% }); %>
+                                                    </ul>
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                    </li>
+                                    <% }); %>
+                            </ul>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    // var ctx = document.getElementById('pieChart').getContext('2d');
+    // var myPieChart = new Chart(ctx, {
+    //     type: 'candlestick',
+    //     data: {
+    //         labels: ['Pass', 'Fail', 'Skipped'],
+    //         datasets: [{
+    //             data: [<%= passCount %>, <%= failCount %>, <%= skipCount %>],
+    //             backgroundColor: ['green', 'red', 'orange'],
+    //             borderWidth: 0, // Set border width to 0 to remove segment borders
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         cutoutPercentage: 50, // Adjust the size of the pie chart
+    //         legend: {
+    //             display: false // Hide legend
+    //         },
+    //         elements: {
+    //             arc: {
+    //                 borderWidth: 1// Set outer border width
+
+    //             }
+    //         }
+    //     }
+    // });
+
+
+    // Function to style scenario names based on status
+    function styleScenario(scenarioElement, status) {
+        if (status === 'passed') {
+            scenarioElement.style.color = 'green';
+        } else if (status === 'failed') {
+            scenarioElement.style.color = 'red';
+        } else {
+            scenarioElement.style.color = 'orange';
+        }
+    }
+
+    // Function to style step names based on status
+    function styleStep(stepElement, status) {
+        if (status === 'passed') {
+            stepElement.style.color = 'green';
+        } else if (status === 'failed') {
+            stepElement.style.color = 'red';
+        } else {
+            stepElement.style.color = 'orange';
+        }
+    }
+
+    function toggleScenarios(element) {
+        const scenarios = element.nextElementSibling;
+        scenarios.style.display = scenarios.style.display === "none" ? "block" : "none";
+    }
+
+
+    function toggleSteps(element) {
+        const steps = element.nextElementSibling;
+        if (steps.style.display === "none") {
+            steps.style.display = "block";
+        } else {
+            steps.style.display = "none";
+        }
+    }
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+    // Functions for showing/hiding sections
+    function showDashboard() {
+        showSection('dashboard');
+    }
+
+    function showTestSummary() {
+        showSection('testSummary');
+    }
+
+    function showAutomationMetrics() {
+        showSection('automationMetrics');
+    }
+
+    function showAutomationExecutionSummary() {
+        showSection('automationExecutionSummary');
+    }
+    function showDetailedSummary() {
+        showSection('detailedSummary');
+    }
+</script>
